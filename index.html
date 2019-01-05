@@ -24,9 +24,7 @@
   <label for="filter-random" class="filters-item">Случайные</label>
 </form>
 
-<form class="upload-form" id="upload-select-image" method="post"
-      enctype="multipart/form-data"
-      autocomplete="off">
+<form class="upload-form" id="upload-select-image" method="post" enctype="multipart/form-data" autocomplete="off" action="https://js.dump.academy/kekstagram">
   <div class="upload-image">
     <input type="file" id="upload-file" class="upload-input" name="filename" required>
     <label class="upload-file upload-control" for="upload-file"></label>
@@ -39,10 +37,10 @@
           <button type="button"
                   class="upload-resize-control upload-resize-controls-button upload-resize-controls-button-dec">–
           </button><!--
-          --><input type="text" class="upload-resize-control upload-resize-controls-value" value="55%" readonly title="Image Scale" name="scale"/><!--
+          --><input type="text" class="upload-resize-control upload-resize-controls-value" value="100%" readonly title="Image Scale" name="scale"/><!--
           --><button type="button"
-                  class="upload-resize-control upload-resize-controls-button upload-resize-controls-button-inc">+
-          </button>
+                     class="upload-resize-control upload-resize-controls-button upload-resize-controls-button-inc">+
+        </button>
         </fieldset>
 
         <div class="upload-form-preview">
@@ -97,9 +95,9 @@
 
         <input class="upload-form-hashtags" name="hashtags" placeholder="#хэш-тег">
 
-        <textarea class="upload-form-description" name="description" placeholder="Ваш комментарий..."></textarea>
+        <textarea class="upload-form-description" name="description" maxlength="140" placeholder="Ваш комментарий..."></textarea>
 
-        <button class="upload-form-cancel" type="reset" id="upload-cancel"></button>
+        <button class="upload-form-cancel" type="reset" id="upload-cancel" tabindex="0"></button>
         <button class="upload-form-submit" type="submit" id="upload-submit">Отправить</button>
       </div>
     </div>
@@ -116,10 +114,7 @@
 <footer class="footer container">
   <div class="center-wrapper">
     <section class="footer-logo">
-      Сделано в <a tabindex="1" href="http://htmlacademy.ru" class="footer-logo-link"><img src="img/ha-logo.png"
-                                                                                           class="footer-logo-image"
-                                                                                           width="130"
-                                                                                           alt="HTML Academy"/>HTML
+      Сделано в <a tabindex="1" href="http://htmlacademy.ru" class="footer-logo-link"><img src="img/ha-logo.png" class="footer-logo-image"     width="130" alt="HTML Academy"/>HTML
       Academy</a> &copy; 2017
     </section>
     <nav class="footer-social">
@@ -149,14 +144,13 @@
 
 <template id="picture-template" style="display: none">
   <a href="" class="picture">
-    <img src="" width="182" height="182">
+    <img class="picture-img" src="" width="182" height="182">
     <span class="picture-stats">
       <span class="picture-stat picture-comments"></span>
       <span class="picture-stat picture-likes"></span>
     </span>
   </a>
 </template>
-
-<script src="js/pictures.js"></script>
+<script src="js/bundle.js"></script>
 </body>
 </html>
