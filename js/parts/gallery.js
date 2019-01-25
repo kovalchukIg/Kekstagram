@@ -1,19 +1,22 @@
 function gallery () {
 
     const pictures = document.querySelector(".pictures"),
-        teplate = document.querySelector("#picture-template").content,
-        overlay = document.querySelector(".gallery-overlay"),
-        overlayClose = document.querySelector(".gallery-overlay-close"),
-        fragment = document.createDocumentFragment(),
-        ESC_KEYKODE = 27,
-        ENTER_KEYKODE = 13,
-        photosQuantity = 26;
+          teplate = document.querySelector("#picture-template").content,
+          overlay = document.querySelector(".gallery-overlay"),
+          overlayClose = document.querySelector(".gallery-overlay-close"),
+          fragment = document.createDocumentFragment(),
+          filter = document.querySelector(".filters"),
+          ESC_KEYKODE = 27,
+          ENTER_KEYKODE = 13,
+          photosQuantity = 26;
 
     function getRandomFromInterval(min, max) {
         const index = Math.floor(Math.random() * (max - min) + min);
         return index;
     }
+
     let photos = [];
+
 
 
     let comment = [
@@ -29,10 +32,59 @@ function gallery () {
         photos.push({
             url: 'photos/' + i + '.jpg',
             likes: getRandomFromInterval(15, 200),
-            comment: comment[getRandomFromInterval(0, comment.length)]
+            comment: comment[getRandomFromInterval(0, comment.length)],
         });
 
     }
+
+
+    filter.classList.remove("hidden");
+
+    function clearPictures() {
+        while (pictures.firstChild) {
+            pictures.removeChild(pictures.firstChild);
+        }
+    }
+
+
+    function sortFuncArray(evt) {
+        clearPictures();
+        let filtersArr = evt.target.value,
+            randomFhoto = [];
+
+        console.log(filtersArr);
+
+        switch (filtersArr) {
+            case "popular":
+                randomFhoto = photos.slice(0).sort(function (a, b) {
+                    return b.likes - a.likes;
+                });
+                break;
+            case "random":
+                randomFhoto = photos.slice(0).sort(function(){
+                    return 0.5 - Math.random()
+                });
+                break;
+            case "recommend":
+                randomFhoto = photos;
+        }
+        console.log(randomFhoto);
+        for (let i = 0; i < photosQuantity; i++){
+            let photoElement = teplate.cloneNode(true);
+            photoElement.querySelector(".picture img").src = randomFhoto[i].url;
+            photoElement.querySelector(".picture-comments").textContent = randomFhoto[i].comment;
+            photoElement.querySelector(".picture-likes").textContent = randomFhoto[i].likes;
+            fragment.appendChild(photoElement);
+        }
+        pictures.appendChild(fragment);
+
+        renderShowFhoto();
+    }
+
+
+    filter.addEventListener("click", sortFuncArray);
+
+
 
     function createPhotoElements(photoCount) {
         for (let i = 0; i < photoCount; i++){

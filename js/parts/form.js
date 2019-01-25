@@ -9,10 +9,21 @@ const uploadiFile = document.querySelector("#upload-file"),
       buttonDec = document.querySelector(".upload-resize-controls-button-dec"),
       effectImage = document.querySelector(".effect-image-preview"),
       effectControl = document.querySelector(".upload-effect-controls"),
+      form = document.querySelector(".upload-form"),
+      formText = document.querySelector(".upload-form-description"),
+      dataForm = new FormData(form),
       ESC_KEYKODE = 27,
       ENTER_KEYKODE = 13;
 
 
+     form.addEventListener("submit", function (evt) {
+         window.upload(dataForm, function () {
+             uploadOverlay.classList.add("hidden");
+             formHashtags.value = "";
+             formText.value = "";
+             });
+         evt.preventDefault();
+     });
 
 
     uploadiFile.addEventListener("change", showForm);
@@ -78,32 +89,34 @@ const uploadiFile = document.querySelector("#upload-file"),
             return arrayHashtags.indexOf(item) !== pos;
         });
 
-        console.log(arrayHashtags);
-        arrayHashtags.forEach(function (element) {
-            if (/[a-zа-я0-9]#/g.test(element)){
-                formHashtags.setCustomValidity("має бути відступ");
-            }
-            else if (element.charAt(0) !== "#"){
-                formHashtags.setCustomValidity("хештег має починатися з #");
-                console.log(element);
-            }
-            else if (arrayHashtags === "#"){
-                formHashtags.setCustomValidity("хештег не може містити тільки #");
-            }
-            else if (arrayHashtags.length > 5){
-                formHashtags.setCustomValidity("не можна написати більше 5 хештегів");
-            }
-            else if (element.length > 20){
-                formHashtags.setCustomValidity("хештег не може містити більше 20 символів");
-            }
-            else if (isDublicated){
-                formHashtags.setCustomValidity("однакові значення");
-            }
-        });
+        if (arrayHashtags === "#"){
+            formHashtags.setCustomValidity("хештег не може містити тільки #");
+        } else if (isDublicated){
+            formHashtags.setCustomValidity("однакові значення");
+        } else if (arrayHashtags.length > 5){
+            formHashtags.setCustomValidity("не можна написати більше 5 хештегів");
+        }else {
+            arrayHashtags.forEach(function (element) {
+                if (/[a-zа-я0-9]#/g.test(element)){
+                    formHashtags.setCustomValidity("має бути відступ");
+                }
+                else if (element.charAt(0) !== "#"){
+                    formHashtags.setCustomValidity("хештег має починатися з #");
+                    console.log(element);
+                }
+                else if (element.length > 20){
+                    formHashtags.setCustomValidity("хештег не може містити більше 20 символів");
+                }else {
+                    formHashtags.setCustomValidity(" ");
+                }
+            });
+        }
     }
 
 
     formHashtags.addEventListener("input", sendHashtags);
+
+
 }
 
 module.exports = form;

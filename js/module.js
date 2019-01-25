@@ -1,7 +1,10 @@
 window.addEventListener("DOMContentLoaded", function () {
-    let gallery = require("./parts/gallery"),
-        form = require("./parts/form");
+    const gallery = require("./parts/gallery"),
+          form = require("./parts/form"),
+          backand = require("./parts/backand");
 
     gallery();
     form();
+    backand();
+
 });
